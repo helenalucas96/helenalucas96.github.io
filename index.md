@@ -1,37 +1,46 @@
-## Welcome to GitHub Pages
+## a quick RE write up from Angstrom CTF because @kieczkowska made me and also to test my understanding of what is going on
 
-You can use the [editor on GitHub](https://github.com/helenalucas96/helenalucas96.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+### Summary
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This is a 80 point challenge from [AngstromCTF](https://angstromctf.com/). You could download the file from here. 
+![Image](helenalucas96.github.io/rev2Screen.PNG)
+I will be using Hexray's [IDA free](https://www.hex-rays.com/products/ida/support/download_freeware.shtml). It's free :)
 
-### Markdown
+After dowloading the file and dropping it into my Kali vm, running "file" on it shows us that it'a a 32-bit ELF. 
+Ok sooo IDA time >:)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+I loaded the file into IDA and took  look at the structure. 
+We can immediately see that we have some kind of checks going on and various end outputs before the program finishes. 
+![Image](helenalucas96.github.io/graphStruct.PNG)
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
+We can also see that there are two levels, because we can see the strings that are printed in various steps. 
+![Image](helenalucas96.github.io/level1&2.PNG)
 
-1. Numbered
-2. List
+Let's focus on level 1 first. 
+![Image](https://github.com/helenalucas96/helenalucas96.github.io/blob/master/Level1.PNG)
 
-**Bold** and _Italic_ and `Code` text
+We see _printf called (this prints the first prompt for the level 1 number) and then the program must have some way of getting our input. 
+It's easy enough to conclude that this is done when ___isoc99_scanf is called (scanf is the important bit here. I assume the ___isoc99_ part is due to compiling with C89 gcc standards, but it doesn't really matter anyway).
+So where does the input go? Where is it compared? 
 
-[Link](url) and ![Image](src)
+```
+call ___isoc99_scanf
+add  esp, 10h
+mov  eax, [ebp+var_1C]
+cmp  eax, 11D7h
+jz ......
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+In this bit of code we can see that we put [ebp_var1C] into eax and then compare eax to 11D7h 
+(that's in hex, we can easily convert it to decimal by right clicking on the value in IDA)
+![Image](helenalucas96.github.io/hextodec.png)
 
-### Jekyll Themes
+Bingo, level 1 solved. Let's run the program with the new info, just to check. 
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/helenalucas96/helenalucas96.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+![Image](helenalucas96.github.io/level1Complete.PNG)
 
-### Support or Contact
+tbc
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+thx to @enusecdan 
