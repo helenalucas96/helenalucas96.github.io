@@ -3,7 +3,7 @@
 ### Summary
 
 This is a 80 point challenge from [AngstromCTF](https://angstromctf.com/). You could download the file from here. 
-![Image](helenalucas96.github.io/rev2Screen.PNG)
+![Image](https://github.com/helenalucas96/helenalucas96.github.io/blob/master/rev2Screen.PNG)
 I will be using Hexray's [IDA free](https://www.hex-rays.com/products/ida/support/download_freeware.shtml). It's free :)
 
 After dowloading the file and dropping it into my Kali vm, running "file" on it shows us that it'a a 32-bit ELF. 
@@ -11,12 +11,12 @@ Ok sooo IDA time >:)
 
 I loaded the file into IDA and took  look at the structure. 
 We can immediately see that we have some kind of checks going on and various end outputs before the program finishes. 
-![Image](helenalucas96.github.io/graphStruct.PNG)
+![Image](https://github.com/helenalucas96/helenalucas96.github.io/blob/master/graphStruct.PNG)
 
 
 
 We can also see that there are two levels, because we can see the strings that are printed in various steps. 
-![Image](helenalucas96.github.io/level1&2.PNG)
+![Image](https://github.com/helenalucas96/helenalucas96.github.io/blob/master/level1&2.PNG)
 
 Let's focus on level 1 first. 
 ![Image](https://github.com/helenalucas96/helenalucas96.github.io/blob/master/Level1.PNG)
@@ -35,11 +35,11 @@ jz ......
 
 In this bit of code we can see that we put [ebp_var1C] into eax and then compare eax to 11D7h 
 (that's in hex, we can easily convert it to decimal by right clicking on the value in IDA)
-![Image](helenalucas96.github.io/hextodec.png)
+![Image](https://github.com/helenalucas96/helenalucas96.github.io/blob/master/hextodec.png)
 
 Bingo, level 1 solved. Let's run the program with the new info, just to check. 
 
-![Image](helenalucas96.github.io/level1Complete.PNG)
+![Image](https://github.com/helenalucas96/helenalucas96.github.io/blob/master/level1Complete.PNG)
 
 tbc
 
