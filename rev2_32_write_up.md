@@ -3,7 +3,7 @@
 ### Summary
 
 This is a 80 point challenge from [AngstromCTF](https://angstromctf.com/). You could download the file from here. 
-![Image](helenalucas96.github.io/rev2Screen.PNG)
+![Image](https://github.com/helenalucas96/helenalucas96.github.io/blob/master/rev2Screen.PNG)
 I will be using Hexray's [IDA free](https://www.hex-rays.com/products/ida/support/download_freeware.shtml). It's free :)
 
 After dowloading the file and dropping it into my Kali vm, running "file" on it shows us that it'a a 32-bit ELF. 
